@@ -1,0 +1,44 @@
+{
+  "name": "red-child",
+  "version": "1.0.0",
+  "description": "Red Child — Cybersecurity Learning App",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "ELECTRON_RUN_AS_NODE='' electron-vite dev",
+    "build": "ELECTRON_RUN_AS_NODE='' electron-vite build",
+    "build:win": "ELECTRON_RUN_AS_NODE='' electron-vite build && electron-builder --win --x64",
+    "preview": "ELECTRON_RUN_AS_NODE='' electron-vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^11.3.31",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
+  },
+  "build": {
+    "appId": "com.redchild.app",
+    "productName": "Red Child",
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "resources/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

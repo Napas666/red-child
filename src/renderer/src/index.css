@@ -1,0 +1,153 @@
+/* ─── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; width: 100%; overflow: hidden; }
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:root {
+  --bg:           #08080f;
+  --bg-2:         #0d0d1a;
+  --bg-panel:     rgba(255, 0, 48, 0.04);
+  --bg-panel-h:   rgba(255, 0, 48, 0.08);
+
+  --red:          #ff0030;
+  --red-bright:   #ff3355;
+  --red-dim:      rgba(255, 0, 48, 0.35);
+  --red-glow:     0 0 20px rgba(255, 0, 48, 0.55), 0 0 60px rgba(255, 0, 48, 0.20);
+  --red-glow-sm:  0 0 8px rgba(255, 0, 48, 0.7);
+
+  --gold:         #ffb800;
+  --gold-dim:     rgba(255, 184, 0, 0.3);
+
+  --border:       rgba(255, 0, 48, 0.22);
+  --border-h:     rgba(255, 0, 48, 0.5);
+
+  --text:         #ffffff;
+  --text-2:       rgba(255, 255, 255, 0.65);
+  --text-3:       rgba(255, 255, 255, 0.35);
+
+  --success:      #00ff88;
+  --error:        #ff3333;
+  --info:         #00aaff;
+
+  --font-head:    'Orbitron', sans-serif;
+  --font-body:    'Rajdhani', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --radius:       6px;
+  --radius-lg:    12px;
+  --transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  cursor: default;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--red-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+/* ─── Scan Lines Overlay ─────────────────────────────────── */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+/* ─── Neon Panel ─────────────────────────────────────────── */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(8px);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.panel:hover { border-color: var(--border-h); }
+
+/* ─── Neon Text ──────────────────────────────────────────── */
+.neon-text {
+  color: var(--red);
+  text-shadow: 0 0 8px rgba(255,0,48,0.9), 0 0 20px rgba(255,0,48,0.5);
+}
+.gold-text {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(255,184,0,0.9), 0 0 20px rgba(255,184,0,0.4);
+}
+
+/* ─── Glitch Animation ───────────────────────────────────── */
+@keyframes glitch-1 {
+  0%,100%  { clip-path: inset(0 0 95% 0); transform: translate(-2px, 0); }
+  20%      { clip-path: inset(30% 0 60% 0); transform: translate(2px, 0); }
+  40%      { clip-path: inset(70% 0 10% 0); transform: translate(-1px, 0); }
+  60%      { clip-path: inset(50% 0 30% 0); transform: translate(3px, 0); }
+  80%      { clip-path: inset(10% 0 80% 0); transform: translate(-2px, 0); }
+}
+@keyframes glitch-2 {
+  0%,100%  { clip-path: inset(80% 0 5% 0);  transform: translate(2px, 0); }
+  20%      { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+  40%      { clip-path: inset(50% 0 20% 0); transform: translate(1px, 0); }
+  60%      { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 0); }
+  80%      { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  92%     { opacity: 1; }
+  93%     { opacity: 0.4; }
+  94%     { opacity: 1; }
+  96%     { opacity: 0.6; }
+  97%     { opacity: 1; }
+}
+@keyframes pulse-glow {
+  0%,100% { box-shadow: var(--red-glow); }
+  50%     { box-shadow: 0 0 30px rgba(255,0,48,0.8), 0 0 80px rgba(255,0,48,0.35); }
+}
+@keyframes scan-move {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(100vh); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50%     { transform: translateY(-8px); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Utility ────────────────────────────────────────────── */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.gap-1 { gap: 4px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.cursor-pointer { cursor: pointer; }
+.text-mono { font-family: var(--font-mono); }
+.text-sm { font-size: 13px; }
+.text-xs { font-size: 11px; }
+.opacity-50 { opacity: 0.5; }

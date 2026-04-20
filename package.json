@@ -4,10 +4,10 @@
   "description": "Red Child — Cybersecurity Learning App",
   "main": "out/main/index.js",
   "scripts": {
-    "dev": "ELECTRON_RUN_AS_NODE='' electron-vite dev",
-    "build": "ELECTRON_RUN_AS_NODE='' electron-vite build",
-    "build:win": "ELECTRON_RUN_AS_NODE='' electron-vite build && electron-builder --win --x64",
-    "preview": "ELECTRON_RUN_AS_NODE='' electron-vite preview"
+    "dev": "cross-env ELECTRON_RUN_AS_NODE='' electron-vite dev",
+    "build": "cross-env ELECTRON_RUN_AS_NODE='' electron-vite build",
+    "build:win": "cross-env ELECTRON_RUN_AS_NODE='' electron-vite build && electron-builder --win --x64",
+    "preview": "cross-env ELECTRON_RUN_AS_NODE='' electron-vite preview"
   },
   "dependencies": {
     "framer-motion": "^11.3.31",
@@ -20,6 +20,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "cross-env": "^10.1.0",
     "electron": "^28.3.3",
     "electron-builder": "^24.13.3",
     "electron-vite": "^2.3.0",

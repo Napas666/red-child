@@ -4,102 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../store/useStore'
 import { modules } from '../data/courses/securityResearcher'
 import NeonButton from '../components/ui/NeonButton'
-
-function renderContent(text: string) {
-  const lines = text.split('\n')
-  return lines.map((line, i) => {
-    if (line.startsWith('**') && line.endsWith('**')) {
-      return (
-        <h3
-          key={i}
-          style={{
-            fontFamily: 'var(--font-head)',
-            fontSize: 14,
-            color: 'var(--red)',
-            letterSpacing: '0.08em',
-            margin: '18px 0 8px',
-            textShadow: 'var(--red-glow-sm)'
-          }}
-        >
-          {line.slice(2, -2)}
-        </h3>
-      )
-    }
-    if (line.startsWith('🔴') || line.startsWith('✅') || line.startsWith('🔒') || line.startsWith('✏️') || line.startsWith('⚡') || line.startsWith('🖤') || line.startsWith('⚫') || line.startsWith('🔳')) {
-      return (
-        <p key={i} style={{ color: 'var(--text)', margin: '6px 0', paddingLeft: 4 }}>
-          {line}
-        </p>
-      )
-    }
-    if (line.startsWith('- ')) {
-      return (
-        <li
-          key={i}
-          style={{
-            color: 'var(--text-2)',
-            marginLeft: 20,
-            marginBottom: 4,
-            lineHeight: 1.6
-          }}
-        >
-          {line.slice(2)}
-        </li>
-      )
-    }
-    if (line.match(/^\|.*\|$/)) {
-      if (line.match(/^[\|\s\-]+$/)) {
-        return null
-      }
-      const cells = line.split('|').filter(Boolean).map((c) => c.trim())
-      return (
-        <div
-          key={i}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${cells.length}, auto)`,
-            gap: '0 16px',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 12,
-            color: 'var(--text-2)',
-            marginBottom: 2
-          }}
-        >
-          {cells.map((c, ci) => (
-            <span key={ci} style={{ padding: '2px 0' }}>
-              {c}
-            </span>
-          ))}
-        </div>
-      )
-    }
-    if (line === '') return <div key={i} style={{ height: 8 }} />
-    return (
-      <p key={i} style={{ color: 'var(--text-2)', lineHeight: 1.7, marginBottom: 2 }}>
-        {line.replace(/\*\*(.*?)\*\*/g, (_, m) => m).split(/`([^`]+)`/).map((part, pi) =>
-          pi % 2 === 1 ? (
-            <code
-              key={pi}
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 12,
-                background: 'rgba(255,0,48,0.12)',
-                border: '1px solid rgba(255,0,48,0.2)',
-                padding: '1px 5px',
-                borderRadius: 3,
-                color: 'var(--red-bright)'
-              }}
-            >
-              {part}
-            </code>
-          ) : (
-            part
-          )
-        )}
-      </p>
-    )
-  })
-}
+import RichText from '../components/ui/RichText'
 
 export default function TheoryView() {
   const { moduleId } = useParams<{ moduleId: string }>()
@@ -272,7 +177,7 @@ export default function TheoryView() {
               flex: 1
             }}
           >
-            {renderContent(section.content)}
+            <RichText content={section.content} />
           </div>
 
           {/* Code example */}

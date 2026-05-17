@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore'
-import { modules } from '../data/courses/securityResearcher'
+import { useModules } from '../hooks/useModules'
 import GlitchText from '../components/ui/GlitchText'
 import NeonButton from '../components/ui/NeonButton'
 import ProgressRing from '../components/ui/ProgressRing'
@@ -15,7 +15,10 @@ const fadeUp = {
 }
 
 export default function Dashboard() {
+  const modules = useModules()
   const navigate = useNavigate()
+  const activeCourse = useStore((s) => s.activeCourse)
+  const setCourse = useStore((s) => s.setCourse)
   const xp = useStore((s) => s.xp)
   const streak = useStore((s) => s.streak)
   const currentLevel = useStore((s) => s.currentLevel())
@@ -49,6 +52,37 @@ export default function Dashboard() {
 
   return (
     <div style={{ maxWidth: 1100, width: '100%' }}>
+      {/* Course Switcher */}
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{ display: 'flex', gap: 10, marginBottom: 24 }}
+      >
+        {([
+          { id: 'security', label: '🔴 Кибербезопасность' },
+          { id: 'crm', label: '🏢 CRM — Экзамен' },
+          { id: 'bpm', label: '⚙️ Моделирование БП' }
+        ] as const).map((c) => (
+          <button
+            key={c.id}
+            onClick={() => setCourse(c.id)}
+            style={{
+              padding: '7px 18px',
+              borderRadius: 6,
+              border: activeCourse === c.id ? '1px solid var(--red)' : '1px solid #333',
+              background: activeCourse === c.id ? 'rgba(255,0,48,0.12)' : 'rgba(255,255,255,0.03)',
+              color: activeCourse === c.id ? 'var(--red)' : 'var(--text-2)',
+              fontFamily: 'var(--font-body)',
+              fontSize: 13,
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            {c.label}
+          </button>
+        ))}
+      </motion.div>
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}

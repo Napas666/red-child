@@ -27,6 +27,9 @@ function xpForNextLevel(level: number): number {
 }
 
 interface StoreState extends UserProgress {
+  activeCourse: 'security' | 'crm' | 'bpm'
+  setCourse: (course: 'security' | 'crm' | 'bpm') => void
+
   // Derived helpers
   currentLevel: () => number
   xpProgress: () => { current: number; needed: number; percent: number }
@@ -53,6 +56,8 @@ export const useStore = create<StoreState>()(
   persist(
     (set, get) => ({
       ...initialState,
+      activeCourse: 'security' as 'security' | 'crm' | 'bpm',
+      setCourse: (course) => set({ activeCourse: course }),
 
       currentLevel: () => xpToLevel(get().xp),
 

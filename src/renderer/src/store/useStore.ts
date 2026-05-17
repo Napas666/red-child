@@ -118,10 +118,16 @@ export const useStore = create<StoreState>()(
             quizTotal: 0,
             xpEarned: 0
           }
-          if (prev.quizCompleted && score <= prev.quizScore) return s
+          // Пропускаем только если новый счёт ХУЖЕ старого (строго меньше).
+          // При равном счёте обновляем — это исправляет ситуацию когда в БД
+          // остался завышенный счёт (баг двойного подсчёта последнего ответа).
+          if (prev.quizCompleted && score < prev.quizScore) return s
+          const improved = score > prev.quizScore || !prev.quizCompleted
           const bonus = score === total ? Math.round(xpEarned * 0.5) : 0
+          // XP начисляем только при реальном улучшении счёта
+          const xpDelta = improved ? xpEarned + bonus : 0
           return {
-            xp: s.xp + xpEarned + bonus,
+            xp: s.xp + xpDelta,
             moduleProgress: {
               ...s.moduleProgress,
               [moduleId]: {
@@ -129,7 +135,7 @@ export const useStore = create<StoreState>()(
                 quizCompleted: true,
                 quizScore: Math.max(prev.quizScore, score),
                 quizTotal: total,
-                xpEarned: prev.xpEarned + xpEarned + bonus,
+                xpEarned: prev.xpEarned + xpDelta,
                 completedAt: new Date().toISOString()
               }
             }

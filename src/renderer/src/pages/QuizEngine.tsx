@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../store/useStore'
-import { modules } from '../data/courses/securityResearcher'
+import { useModules } from '../hooks/useModules'
 import NeonButton from '../components/ui/NeonButton'
 
 type Phase = 'intro' | 'question' | 'result'
 
 export default function QuizEngine() {
+  const modules = useModules()
   const { moduleId } = useParams<{ moduleId: string }>()
   const navigate = useNavigate()
   const completeQuiz = useStore((s) => s.completeQuiz)
@@ -43,7 +44,8 @@ export default function QuizEngine() {
 
   const handleNext = () => {
     if (isLast) {
-      const finalScore = answers.filter(Boolean).length + (selected === question.correctIndex ? 1 : 0)
+      // answers уже включает ответ на последний вопрос (добавлен в handleSelect)
+      const finalScore = answers.filter(Boolean).length
       const xpEarned = Math.round((finalScore / mod.quiz.length) * mod.xpReward * 0.5)
       completeQuiz(mod.id, finalScore, mod.quiz.length, xpEarned)
       setPhase('result')

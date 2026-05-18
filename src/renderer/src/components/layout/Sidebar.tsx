@@ -19,6 +19,7 @@ export default function Sidebar() {
 
   return (
     <aside
+      className="sidebar"
       style={{
         width: 220,
         flexShrink: 0,
@@ -32,7 +33,7 @@ export default function Sidebar() {
       }}
     >
       {/* XP / Level block */}
-      <div style={{ padding: '0 16px 20px', borderBottom: '1px solid var(--border)' }}>
+      <div className="sidebar-top" style={{ padding: '0 16px 20px', borderBottom: '1px solid var(--border)' }}>
         <div
           style={{
             display: 'flex',
@@ -94,6 +95,7 @@ export default function Sidebar() {
       {/* Streak */}
       {streak > 0 && (
         <div
+          className="sidebar-streak"
           style={{
             padding: '10px 16px',
             borderBottom: '1px solid var(--border)',
@@ -122,7 +124,7 @@ export default function Sidebar() {
       )}
 
       {/* Navigation */}
-      <nav style={{ flex: 1, padding: '12px 0' }}>
+      <nav className="sidebar-nav" style={{ flex: 1, padding: '12px 0' }}>
         {navItems.map((item) => {
           const active = location.pathname.startsWith(item.path)
           return (
@@ -132,6 +134,7 @@ export default function Sidebar() {
               style={{ textDecoration: 'none', display: 'block' }}
             >
               <div
+                className="sidebar-nav-item"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -145,6 +148,7 @@ export default function Sidebar() {
                 {active && (
                   <motion.div
                     layoutId="sidebar-active"
+                    className="sidebar-active-indicator"
                     style={{
                       position: 'absolute',
                       inset: 0,
@@ -155,6 +159,7 @@ export default function Sidebar() {
                   />
                 )}
                 <span
+                  className="sidebar-nav-icon"
                   style={{
                     fontSize: 16,
                     color: active ? 'var(--red)' : 'var(--text-3)',
@@ -167,6 +172,7 @@ export default function Sidebar() {
                   {item.icon}
                 </span>
                 <span
+                  className="sidebar-nav-label"
                   style={{
                     fontFamily: 'var(--font-body)',
                     fontWeight: 600,
@@ -188,6 +194,7 @@ export default function Sidebar() {
 
       {/* Bottom system info */}
       <div
+        className="sidebar-bottom"
         style={{
           padding: '12px 16px 0',
           borderTop: '1px solid var(--border)'

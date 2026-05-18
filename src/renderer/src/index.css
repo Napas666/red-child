@@ -2,6 +2,13 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body, #root { height: 100%; width: 100%; overflow: hidden; }
 
+/* ─── Mobile base ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  html, body, #root { overflow: auto; height: auto; min-height: 100dvh; }
+  body { cursor: auto; user-select: text; -webkit-tap-highlight-color: transparent; }
+  input, textarea, select { user-select: text; }
+}
+
 /* ─── Tokens ─────────────────────────────────────────────── */
 :root {
   --bg:           #08080f;
@@ -151,3 +158,92 @@ body {
 .text-sm { font-size: 13px; }
 .text-xs { font-size: 11px; }
 .opacity-50 { opacity: 0.5; }
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE  (≤768px)
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Layout shell ── */
+  .app-layout        { flex-direction: column !important; }
+  .app-main          { padding: 16px 14px 90px !important; overflow: visible !important; }
+
+  /* ── Sidebar → Bottom nav ── */
+  .sidebar {
+    width: 100% !important;
+    height: 64px !important;
+    flex-direction: row !important;
+    border-right: none !important;
+    border-top: 1px solid var(--border) !important;
+    padding: 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 100 !important;
+    background: rgba(8,8,15,0.97) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    overflow: hidden !important;
+  }
+  .sidebar-top    { display: none !important; }
+  .sidebar-streak { display: none !important; }
+  .sidebar-bottom { display: none !important; }
+  .sidebar-nav {
+    flex: 1 !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+  .sidebar-nav-item {
+    flex: 1 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 3px !important;
+    padding: 8px 4px !important;
+  }
+  .sidebar-nav-label {
+    font-size: 9px !important;
+    letter-spacing: 0.03em !important;
+  }
+  .sidebar-nav-icon { font-size: 20px !important; }
+  .sidebar-active-indicator {
+    top: 0 !important; bottom: auto !important;
+    left: 0 !important; right: 0 !important;
+    height: 2px !important; width: 100% !important;
+    border-right: none !important;
+    border-top: 2px solid var(--red) !important;
+  }
+
+  /* ── TitleBar ── */
+  .titlebar { display: none !important; }
+
+  /* ── Dashboard ── */
+  .dashboard-stats { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+  .dashboard-course-btns { flex-wrap: wrap !important; gap: 6px !important; }
+  .dashboard-course-btn  { font-size: 11px !important; padding: 5px 10px !important; }
+
+  /* ── Learning Path cards ── */
+  .module-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Theory view ── */
+  .theory-layout { flex-direction: column !important; }
+  .theory-sidebar { width: 100% !important; border-right: none !important; border-bottom: 1px solid var(--border) !important; max-height: 200px !important; }
+
+  /* ── Quiz ── */
+  .quiz-option { padding: 12px 14px !important; }
+
+  /* ── General panels ── */
+  .panel { border-radius: 10px !important; }
+
+  /* ── Orbitron font size clamp ── */
+  h1, h2, h3 { word-break: break-word; }
+}
+
+/* Extra small phones */
+@media (max-width: 380px) {
+  .app-main { padding: 12px 10px 80px !important; }
+  .dashboard-stats { grid-template-columns: repeat(2, 1fr) !important; }
+}

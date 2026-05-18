@@ -25,9 +25,10 @@ export default function Layout() {
       <TitleBar />
 
       {/* Body */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative', zIndex: 1 }}>
+      <div className="app-layout" style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative', zIndex: 1 }}>
         <Sidebar />
         <main
+          className="app-main"
           style={{
             flex: 1,
             overflow: 'hidden auto',

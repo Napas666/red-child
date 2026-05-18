@@ -13,6 +13,7 @@ declare global {
 export default function TitleBar() {
   return (
     <div
+      className="titlebar"
       style={{
         height: 36,
         background: 'rgba(8,8,15,0.95)',

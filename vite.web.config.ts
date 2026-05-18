@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   root: resolve(__dirname, 'src/renderer'),
-  base: '/red-child/',
+  base: process.env.VITE_BASE ?? '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src/renderer/src')
